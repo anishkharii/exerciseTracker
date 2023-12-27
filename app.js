@@ -7,6 +7,7 @@ require('dotenv').config();
 const app = express();
 app.use(bodyParser.urlencoded({extended:true}));
 app.use('/public',express.static('public'));
+app.use(express.json());
 app.use(cors());
 mongoose.connect(process.env.MONGO_URI).then(()=>{
     console.log('connected to MongoDB');
@@ -45,16 +46,37 @@ app.get('/api/users',async(req,res)=>{
     res.json(users);
 });
 app.get('/api/users/delete',async(req,res)=>{
-    if(req.query.key==='AnishKhari'){
+    if(req.query.key=== process.env.ACCESS_KEY || req.body.key === process.env.ACESSS_KEY){
         await User.deleteMany({}).then(()=>{
-            console.log('Deleted all data');
-            res.redirect('/');
+            res.json({message:'All users are deleted successfully.'});
         });
     }
     else{
-        res.json({error:"Not Authorised"});
+        res.status(401).json({error:"Not Authorised"});
     }
     
+});
+
+
+app.get('/api/users/bulkadd',async(req,res)=>{
+    if(req.query.key=== process.env.ACCESS_KEY || req.body.key === process.env.ACESSS_KEY){
+        res.sendFile(__dirname+'/views/addBulk.html');
+    }
+    else{
+        res.status(401).json({error:"Not Authorised"});
+    }
+});
+
+
+app.post('/api/users/bulkadd',async(req,res)=>{
+    try{
+        const userData = req.body;
+        const result = await User.insertMany(userData);
+        res.json({message:'Bulk data added successfully',insertedUsers:result});
+    }
+    catch(err){
+        res.status(500).json({error:'Internal Server Error'});``
+    }
 })
 
 app.post('/api/users/:id/exercises',async(req,res)=>{
@@ -76,8 +98,9 @@ app.post('/api/users/:id/exercises',async(req,res)=>{
         });
     }
     catch(err){
+        console.log(err);
         res.json({error:"Invalid ID"});
-    }
+    }  
 });
 
 app.get('/api/users/:id/logs', async (req, res) => {
@@ -120,6 +143,18 @@ app.get('/api/users/:id/logs', async (req, res) => {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
+});
+
+app.get('/api/users/:id/delete',async(req,res)=>{
+    try{
+        const user = await User.findByIdAndDelete(req.params.id);
+        if(!user) return res.status(404).json({error:'User not found'});
+        res.json({message:`Username= ${user.username} is deleted.`});
+    }
+    catch(err){
+        res.status(500).json({error:'Internal server Error'});
+    }
+
 });
 
 
