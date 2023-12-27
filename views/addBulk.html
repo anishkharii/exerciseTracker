@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exercise Tracker</title>
+        <link rel="stylesheet" href="/public/styles.css">
+    </head>
+    <body>
+        <h1>Exercise Tracker</h1>
+        <hr>
+        <h3>Welcome Sir, please write data in JSON format.</h3>
+        <div class="section">
+            <h3>Bulk Add Users</h3>
+            <p>POST /api/users/bulkadd</p>
+            <form id="bulkDataForm">
+                <textarea id="jsonData" name="jsonData"  placeholder="Enter in Json Format..."></textarea>
+                <button type="submit">Add Bulk Users</button>
+            </form>
+        </div>
+    </body>
+    <script> 
+    
+    document.getElementById('bulkDataForm').addEventListener('submit',(event)=>{
+        event.preventDefault();
+        const jsonData = document.getElementById('jsonData').value;
+
+        try{
+            const userList = JSON.parse(jsonData);
+            fetch('/api/users/bulkadd',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify(userList)
+            }).then((response)=>{
+                return response.json();
+            }).then((data)=>{
+                alert(data.message);
+            });
+        }
+        catch(err){
+            console.error('Error parsing JSON',err);
+            alert('Invalid format');
+        }
+    })
+
+    </script>
+</html>
