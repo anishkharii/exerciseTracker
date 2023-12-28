@@ -20,6 +20,9 @@ p{
 p span{
     background-color: #fffec4;
 }
+li{
+    background-color: #fffec4;
+}
 input[type=text],input[type=number],input[type=date]{
     display: block;
     margin:0.75rem;
@@ -27,6 +30,14 @@ input[type=text],input[type=number],input[type=date]{
     border-radius: 3px;
     padding: 5px;
     width:85%;
+}
+textarea{
+    width:95%;
+    height:12rem;
+    border:none;
+    border-radius: 5px;
+    padding:3%;
+    resize: none;
 }
 button{
     background-color: rgb(175, 251, 251);
