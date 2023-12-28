@@ -11,7 +11,7 @@
             <h3>Create New User</h3>
             <p>POST /api/users</p>
             <form method="post" action="/api/users">
-                <input type="text" name="username" placeholder="username" oninvalid="this.setCustomValidity('Username is required.')" required/>
+                <input type="text" name="username" placeholder="username" autocomplete="off" oninvalid="this.setCustomValidity('Username is required.')" required/>
                 <button type="submit">Add User</button>
             </form>
         </div>
@@ -19,16 +19,34 @@
             <h3>Add Exercise</h3>
             <p>POST /api/users/:id/exercises</p>
             <form id="exerciseForm" method="post" action="">
-                <input type="text" name="userid" placeholder="user _id"/>
+                <input type="text" name="userid" placeholder="user _id" autocomplete="off"/>
                 <input type="text" name="description" placeholder="description*" required />
-                <input type="number" name="duration" placeholder="duration*(mins.)" required />
-                <input type="text" name="date" placeholder="date (yyyy-mm-dd)" />
+                <input type="number" name="duration" min="0" placeholder="duration*(mins.)" required />
+                <input type="date" name="date" placeholder="date (yyyy-mm-dd)" />
                 <button type="submit">Add Exercise</button>
             </form>
         </div>
-        <p><b>GET user's exercise log:</b><span>GET /api/users/:id/logs?[from][&to][&limit]</span> </p>
-        <p><b>[]</b> = optional</p>
-        <p><b>from, to</b> = dates (yyyy-mm-dd); <b>limit</b> = number</p>
+        <div class="section">
+            <h3>Example Usage</h3>
+            <ul>
+                <li>
+                    <p><b>GET user's exercise log:</b><span>GET /api/users/:id/logs?[from][&to][&limit]</span> </p>
+                    <p><b>[]</b> = optional</p>
+                    <p><b>from, to</b> = dates (yyyy-mm-dd); <b>limit</b> = number</p>
+                </li>
+                <li>
+                    <p><b>GET all users: </b><span>GET /api/users</span></p>
+                </li>
+                <li>
+                    <p><b>DELETE a user: </b> GET /api/users/:id/delete</p>
+                </li>
+                <li>
+                    <p><b>DELETE all users:</b> GET /api/users/delete?key=[passkey]</p>
+                    <p><b>Note: </b> Only creators has access.</p>
+                </li>
+            </ul>
+        </div>
+        
     </body>
     <script>
         var exerciseForm = document.getElementById('exerciseForm');
