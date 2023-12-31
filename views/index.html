@@ -35,14 +35,20 @@
                     <p><b>from, to</b> = dates (yyyy-mm-dd); <b>limit</b> = number</p>
                 </li>
                 <li>
-                    <p><b>GET all users: </b><span>GET /api/users</span></p>
+                    <p><b>GET all users: </b><span>GET <a href="/api/users">/api/user</a></span></p>
+                </li>
+                <li>
+                    <p><b>GET all users in table-view: </b><span>GET <a href="/api/users/table-view">/api/user/table-view</a></span></p>
                 </li>
                 <li>
                     <p><b>DELETE a user: </b> GET /api/users/:id/delete</p>
                 </li>
+                <h4>Admin Access Only</h4>
                 <li>
                     <p><b>DELETE all users:</b> GET /api/users/delete?key=[passkey]</p>
-                    <p><b>Note: </b> Only creators has access.</p>
+                </li>
+                <li>
+                    <p><b>ADD Bulk Data: </b> GET /api/users/bulkadd?key=[passkey]</p>
                 </li>
             </ul>
         </div>

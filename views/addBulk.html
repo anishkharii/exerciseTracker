@@ -15,6 +15,10 @@
                 <textarea id="jsonData" name="jsonData"  placeholder="Enter in Json Format..."></textarea>
                 <button type="submit">Add Bulk Users</button>
             </form>
+            <form method="post" action="/api/users/bulkadd-filter">
+                <input type="text" name="url" />
+                <button type="submit">Add filtered Data</button>
+            </form>
         </div>
     </body>
     <script> 
